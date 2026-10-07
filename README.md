@@ -350,19 +350,61 @@ android-security-audit/
 
 # 📸 Security Evidence
 
-The security assessment was supported by practical evidence collected during the vulnerability analysis and validation phases.
+The security assessment was supported by practical evidence collected before and after remediation.
 
-Evidence includes:
+---
 
-* 🗄️ SQLite database containing plaintext passwords before remediation
-* 🔐 SQLite database showing transformed password values after remediation
-* 🖼️ `FLAG_SECURE` implementation and validation
-* 🔑 Weak password rejection tests
-* 📋 Logcat output showing sensitive information before remediation
-* ✅ Logcat validation confirming the removal of sensitive password information
+## 🔴 1. Plaintext Password Storage
 
-> 📌 Screenshots and additional evidence can be added to the repository to document the assessment and remediation process.
+### Database extraction
 
+The application's local SQLite database was extracted from the Android application sandbox using Android Studio Device File Explorer.
+
+![SQLite Database Extraction](screenshots/01-plaintext-password/01-database-extraction.png)
+
+### Before — Plaintext Password
+
+The vulnerable database exposed user passwords in readable form.
+
+![Plaintext Password in SQLite Database](screenshots/01-plaintext-password/02-plaintext-password.png)
+
+### After — Password Hashing
+
+After remediation, the stored password value was transformed into a SHA-256 hash.
+
+![Hashed Password in SQLite Database](screenshots/01-plaintext-password/03-hashed-password.png)
+
+---
+
+## 🟠 2. Screenshot Protection — FLAG_SECURE
+
+After implementing `FLAG_SECURE`, sensitive application content was protected from standard screenshot capture and recent-app exposure.
+
+![FLAG_SECURE Validation](screenshots/02-flag-secure/flag-secure-validation.png)
+
+---
+
+## 🟠 3. Password Policy
+
+A weak password is rejected according to the implemented password validation policy.
+
+![Weak Password Rejected](screenshots/03-password-policy/weak-password-rejected.png)
+
+---
+
+## 🔴 4. Sensitive Data in Logcat
+
+### Before — Password Exposure
+
+The initial application could expose the entered password through Android Logcat.
+
+![Password Exposed in Logcat](screenshots/04-logcat/plaintext-password-logcat.png)
+
+### After — Sensitive Logging Removed
+
+The vulnerable logging statement was removed from the application source code.
+
+![Logcat After Remediation](screenshots/04-logcat/logcat-after-remediation.png)
 ---
 
 # 📚 OWASP MASVS Mapping
