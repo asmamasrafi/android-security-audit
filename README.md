@@ -53,7 +53,7 @@ Security Remediation
         ↓
 Validation Testing
 
-
+```
 # 🔎 Security Vulnerability Assessment
 
 The security assessment identified several weaknesses related to **authentication, local data storage, sensitive information exposure, and insecure logging**.
